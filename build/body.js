@@ -2,7 +2,7 @@
   if (window) originalPlanetaryjs = window.planetaryjs;
   var plugins = [];
 
-  var doDrawLoop = function(planet, canvas, hooks1) {
+  var doDrawLoop = function(planet, canvas, hooks) {
     d3.timer(function() {
       if (planet.stopped) {
         return true;

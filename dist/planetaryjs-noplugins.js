@@ -2,7 +2,7 @@
  *  Copyright (c) 2013 Michelle Tilley
  *
  *  Released under the MIT license
- *  Date: 2015-11-22T10:07:37.856Z
+ *  Date: 2017-02-23T12:30:26.972Z
  */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -21,7 +21,7 @@
   if (window) originalPlanetaryjs = window.planetaryjs;
   var plugins = [];
 
-  var doDrawLoop = function(planet, canvas, hooks) {
+  var doDrawLoop = function(planet, canvas, hooks1) {
     d3.timer(function() {
       if (planet.stopped) {
         return true;

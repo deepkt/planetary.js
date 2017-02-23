@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
@@ -34,6 +35,10 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter('default'));
 });
 
+gulp.task('watch:source', function () {
+    gulp.watch('./src/**', ['build']);
+});
+
 gulp.task('build', function() {
   build(fullSource, 'planetaryjs.js', fullHeader, false);
   build(fullSource, 'planetaryjs.min.js', shortHeader, true);
@@ -41,6 +46,7 @@ gulp.task('build', function() {
   build(nonPluginSource, 'planetaryjs-noplugins.min.js', shortHeader, true);
 
   gulp.src('./src/world-110m.json').pipe(gulp.dest('./dist'));
+  gulp.src('./src/test.html').pipe(gulp.dest('./dist'));
 });
 
-gulp.task('default', ['jshint', 'build']);
+gulp.task('default', ['jshint', 'build', 'watch:source']);

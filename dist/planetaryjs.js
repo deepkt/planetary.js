@@ -2,7 +2,7 @@
  *  Copyright (c) 2013 Michelle Tilley
  *
  *  Released under the MIT license
- *  Date: 2015-11-22T10:07:37.594Z
+ *  Date: 2017-02-23T12:30:27.177Z
  */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -21,7 +21,7 @@
   if (window) originalPlanetaryjs = window.planetaryjs;
   var plugins = [];
 
-  var doDrawLoop = function(planet, canvas, hooks) {
+  var doDrawLoop = function(planet, canvas, hooks1) {
     d3.timer(function() {
       if (planet.stopped) {
         return true;
@@ -174,7 +174,7 @@
           var file = config.file || 'world-110m.json';
           d3.json(file, function(err, world) {
             if (err) {
-              throw new Error("Could not load JSON " + file);
+              throw new Error("Could not load " + file);
             }
             planet.plugins.topojson.world = world;
             done();
