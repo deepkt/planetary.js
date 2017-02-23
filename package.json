@@ -22,12 +22,14 @@
     "bower": "~1.2.8",
     "gulp": "~3.9.1",
     "gulp-concat": "BinaryMuse/gulp-concat",
+    "gulp-connect": "^5.0.0",
     "gulp-header": "~1.0.2",
     "gulp-jshint": "~1.6.1",
     "gulp-rename": "~1.2.0",
     "gulp-replace": "~0.3.0",
     "gulp-uglify": "~0.3.0",
-    "gulp-watch": "^4.3.11"
+    "gulp-watch": "^4.3.11",
+    "jshint": "^2.9.4"
   },
   "dependencies": {
     "topojson": ">=1.4.6",

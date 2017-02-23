@@ -7,6 +7,7 @@ var header = require('gulp-header');
 var jshint = require('gulp-jshint');
 var replace = require('gulp-replace');
 var metadata = require('./package.json');
+var connect = require('gulp-connect');
 
 var shortHeader = "/*! Planetary.js <%= version %> | (c) 2013 Michelle Tilley | Released under MIT License */\n"
 var fullHeader = [
@@ -22,6 +23,19 @@ var fullHeader = [
 var fullSource = gulp.src(['./src/_umd_header.js', './src/body.js', './src/plugins.js', './src/_umd_footer.js']);
 var nonPluginSource = gulp.src(['./src/_umd_header.js', './src/body.js', './src/_umd_footer.js']);
 
+gulp.task('connect', function() {
+  connect.server({
+    root: 'dist',
+    port: 8866,
+    livereload: true
+  });
+});
+
+gulp.task('refreshpage', function () {
+  gulp.src('./dist/*.html')
+    .pipe(connect.reload());
+});
+
 function build(source, name, headerText, minify) {
   var js = source.pipe(concat(name));
   if (minify) { js = js.pipe(uglify()); }
@@ -36,7 +50,7 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('watch:source', function () {
-    gulp.watch('./src/**', ['build']);
+    gulp.watch('./src/**', ['jshint', 'build', 'refreshpage']);
 });
 
 gulp.task('build', function() {
@@ -47,6 +61,7 @@ gulp.task('build', function() {
 
   gulp.src('./src/world-110m.json').pipe(gulp.dest('./dist'));
   gulp.src('./src/test.html').pipe(gulp.dest('./dist'));
+  gulp.src('./src/world-110m-withlakes.json').pipe(gulp.dest('./dist'));
 });
 
-gulp.task('default', ['jshint', 'build', 'watch:source']);
+gulp.task('default', ['jshint', 'build', 'connect', 'watch:source']);
