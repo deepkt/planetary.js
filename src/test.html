@@ -5,11 +5,20 @@
   <script type='text/javascript' src='planetaryjs.min.js'></script>
 </head>
 <body>
-  <h1>OK</h1>
   <canvas id='rotatingGlobe' width='1200' height='1200'></canvas>
   <script type='text/javascript'>
   (function() {
       var globe = planetaryjs.planet();
+
+      // Sample mention data
+      var mentions = [
+        {country:'IN', positive:12, negative:7, neutral:20},
+        {country:'MY', positive:1, negative:1, neutral:12},
+        {country:'SG', positive:2, negative:0, neutral:0},
+        {country:'JP', positive:8, negative:11, neutral:5},
+        {country:'TH', positive:4, negative:3, neutral:9},
+      ];
+
       // Load our custom `autorotate` plugin; see below.
       globe.loadPlugin(autorotate(10));
       // The `earth` plugin draws the oceans and the land; it's actually
@@ -18,17 +27,12 @@
       // Note that we're loading a special TopoJSON file
       // (world-110m-withlakes.json) so we can render lakes.
       globe.loadPlugin(planetaryjs.plugins.earth({
-        topojson: { file:   '/world-110m-withlakes.json' },
+        topojson: { file:   '/world-110m.json' },
         oceans:   { fill:   '#000080' },
         land:     { fill:   '#339966' },
         borders:  { stroke: '#008000' }
       }));
-      // Load our custom `lakes` plugin to draw lakes; see below.
-      globe.loadPlugin(lakes({
-        fill: '#000080'
-      }));
-      // The `pings` plugin draws animated pings on the globe.
-      globe.loadPlugin(planetaryjs.plugins.pings());
+
       // The `zoom` and `drag` plugins enable
       // manipulating the globe with the mouse.
       globe.loadPlugin(planetaryjs.plugins.zoom({
@@ -47,14 +51,18 @@
       // Set up the globe's initial scale, offset, and rotation.
       globe.projection.scale(175).translate([175, 175]).rotate([0, -10, 0]);
 
-      // Every few hundred milliseconds, we'll draw another random ping.
-      var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
+      // ************* Load mentions plugin ************* //
+      globe.loadPlugin(planetaryjs.plugins.mentions());
+      
+      // Sample Data update
       setInterval(function() {
-        var lat = Math.random() * 170 - 85;
-        var lng = Math.random() * 360 - 180;
-        var color = colors[Math.floor(Math.random() * colors.length)];
-        globe.plugins.pings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
-      }, 150);
+        for(var i=0; i<mentions.length; i++){
+          mentions[i].positive += Math.floor((Math.random() * 6));
+          mentions[i].negative += Math.floor((Math.random() * 6));
+          mentions[i].neutral += Math.floor((Math.random() * 6));
+        }
+        globe.plugins.mentions.update(mentions);
+      }, 3000);
 
       var canvas = document.getElementById('rotatingGlobe');
       // Special code to handle high-density displays (e.g. retina, some phones)

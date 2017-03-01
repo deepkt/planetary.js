@@ -2,7 +2,7 @@
  *  Copyright (c) 2013 Michelle Tilley
  *
  *  Released under the MIT license
- *  Date: 2017-02-23T14:12:44.535Z
+ *  Date: 2017-03-01T11:19:39.004Z
  */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {

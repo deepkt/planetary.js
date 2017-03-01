@@ -20,7 +20,7 @@ var fullHeader = [
   ""
 ].join("\n");
 
-var fullSource = gulp.src(['./src/_umd_header.js', './src/body.js', './src/plugins.js', './src/_umd_footer.js']);
+var fullSource = gulp.src(['./src/_umd_header.js', './src/body.js', './src/plugins.js', './src/compass_plugins.js', './src/_umd_footer.js']);
 var nonPluginSource = gulp.src(['./src/_umd_header.js', './src/body.js', './src/_umd_footer.js']);
 
 gulp.task('connect', function() {
@@ -44,7 +44,7 @@ function build(source, name, headerText, minify) {
 }
 
 gulp.task('jshint', function() {
-  gulp.src(['./src/body.js', './src/plugins.js'])
+  gulp.src(['./src/body.js', './src/plugins.js', './src/compass_plugins.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
@@ -62,6 +62,7 @@ gulp.task('build', function() {
   gulp.src('./src/world-110m.json').pipe(gulp.dest('./dist'));
   gulp.src('./src/test.html').pipe(gulp.dest('./dist'));
   gulp.src('./src/world-110m-withlakes.json').pipe(gulp.dest('./dist'));
+  gulp.src('./src/world-topo.json').pipe(gulp.dest('./dist'));
 });
 
 gulp.task('default', ['jshint', 'build', 'connect', 'watch:source']);
